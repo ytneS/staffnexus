@@ -58,7 +58,7 @@
 
             <div class="bottom-content">
                 <li class="">
-                    <a href="login.php">
+                    <a href="index.php">
                         <i class='bx bx-log-out icon'></i>
                         <span class="text nav-text">Odhlásiť sa</span>
                     </a>
