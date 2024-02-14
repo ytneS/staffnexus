@@ -20,59 +20,65 @@ require_once("Exception.php");
 if (isset($_POST['resetbtn'])) {
     $email = $_POST['email'];
 
-    $sql = "SELECT * FROM users WHERE email='$email'";
-    $result = $conn->query($sql);
+    try {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $row = $stmt->fetch();
 
-    if ($result->num_rows > 0) {
-        // Generate a random password reset token
-        $token = bin2hex(random_bytes(3));
+        if ($row) {
+            // Generate a random password reset token
+            $token = bin2hex(random_bytes(3));
 
-        $hashedPassword = hash('sha256', $token);
+            $hashedPassword = hash('sha256', $token);
 
-        // Update the user's record with the reset token
-        $updateSql = "UPDATE users SET password='$hashedPassword' WHERE email='$email'";
-        $conn->query($updateSql);
+            // Update the user's record with the reset token
+            $updateSql = "UPDATE users SET password=:hashedPassword WHERE email=:email";
+            $updateStmt = $conn->prepare($updateSql);
+            $updateStmt->bindParam(':hashedPassword', $hashedPassword);
+            $updateStmt->bindParam(':email', $email);
+            $updateStmt->execute();
 
-        // Send a password reset email to the user using PHPMailer
-        $mail = new PHPMailer\PHPMailer\PHPMailer;
+            // Send a password reset email to the user using PHPMailer
+            $mail = new PHPMailer\PHPMailer\PHPMailer;
 
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true; // Set this to true
-        $mail->Username = 'staffnexuss@gmail.com'; // Replace with your Gmail email address
-        $mail->Password = 'ffsb lbiu txvg csxk'; // Replace with your Gmail password
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'staffnexuss@gmail.com'; // Replace with your Gmail email address
+            $mail->Password = 'ffsb lbiu txvg csxk'; // Replace with your Gmail password
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
 
-        $mail->setFrom('staffnexuss@gmail.com', 'Staff Nexus');
-        $mail->addAddress($email);
+            $mail->setFrom('staffnexuss@gmail.com', 'Staff Nexus');
+            $mail->addAddress($email);
 
-        $mail->Subject = 'Resetovanie hesla';
-        $mail->Body = "Vaše heslo bolo resetované na: $token";
+            $mail->Subject = 'Resetovanie hesla';
+            $mail->Body = "Vaše heslo bolo resetované na: $token";
 
-        if (!$mail->send()) {
-            echo "<script>
-                setTimeout(function() {
-                    window.alert('Chyba pri posielaní mailu: " . $mail->ErrorInfo . "');
-                }, 100);
-              </script>";
+            if (!$mail->send()) {
+                throw new Exception('Chyba pri posielaní mailu: ' . $mail->ErrorInfo);
+            } else {
+                echo "<script>
+                    setTimeout(function() {
+                        window.alert('Email na obnovenie hesla bol odoslaný. Prosím, skontrolujte si svoj email pre ďalšie pokyny.');
+                    }, 100);
+                    var formSubmitted = true; // Set the variable to true when the form is submitted
+                  </script>";
+            }
         } else {
-            echo "<script>
-                setTimeout(function() {
-                    window.alert('Email na obnovenie hesla bol odoslaný. Prosím, skontrolujte si svoj email pre ďalšie pokyny.');
-                }, 100);
-                var formSubmitted = true; // Set the variable to true when the form is submitted
-              </script>";
+            throw new Exception('Email nebol nájdený v databáze.');
         }
-    } else {
+    } catch (Exception $e) {
         echo "<script>
             setTimeout(function() {
-                window.alert('Email nebol nájdený v databáze.');
+                window.alert('Error: " . $e->getMessage() . "');
             }, 100);
           </script>";
     }
 }
 ?>
+
 
 
 
