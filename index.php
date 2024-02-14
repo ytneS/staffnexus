@@ -56,9 +56,9 @@
                 $sql = "SELECT * FROM users WHERE email='$lgEmail' AND password='$hashedPassword'";
                 $result = $conn->query($sql);
 
-                if ($result->num_rows > 0) {
+                if ($result->rowCount() > 0) {
                     session_start(); 
-                    $row = $result->fetch_assoc();
+                    $row = $result->fetch(PDO::FETCH_ASSOC);
                     $_SESSION['username'] = $row['username'];
 
                     if ($rememberMe) {
