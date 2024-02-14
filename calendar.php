@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="CSS/header.css" />
     <link rel="stylesheet" href="CSS/calendar.css" />
     <link rel="icon" href="IMG/logo2.png">
-    <title>Calendar</title>
+    <title>Kalendár</title>
 </head>
 <body>
     <?php 
