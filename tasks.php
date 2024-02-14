@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/header.css" />
     <link rel="stylesheet" href="CSS/tasks.css" />
-    <title>Tasks</title>
+    <title>Úlohy</title>
     <link rel="icon" href="IMG/logo2.png">
 </head>
 <body>
