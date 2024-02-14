@@ -22,14 +22,17 @@
                 $password = $_POST['password'];
             
                 // Kontrola, či e-mail už existuje
-                $checkEmailQuery = "SELECT * FROM users WHERE email='$email'";
-                $result = $conn->query($checkEmailQuery);
-            
-                if ($result->num_rows > 0) {
+                $checkEmailQuery = "SELECT * FROM users WHERE email=:email";
+                $stmt = $conn->prepare($checkEmailQuery);
+                $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if (count($result) > 0) {
                     echo "<script>
                             document.getElementById('email').classList.add('error');
                             document.getElementById('email-error').innerText = 'Tento e-mail sa už používa. Prosím, zvoľte iný e-mail.';
-                          </script>";
+                        </script>";
                 } else {
                     // E-mail nie je v databáze, môžeme pokračovať s registráciou
                     $hashedPassword = hash('sha256', $password);
