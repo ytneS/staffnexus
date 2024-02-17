@@ -61,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <label for="priority">Priorita:</label>
     <select name="priority" id="priority">
         <option value="" disabled selected>Vyber si prioritu</option>
-        <option value="Low">Malá</option>
-        <option value="Medium">Stredná</option>
-        <option value="High">Vysoká</option>
+        <option value="Malá">Malá</option>
+        <option value="Stredná">Stredná</option>
+        <option value="Vysoká">Vysoká</option>
     </select>
     <p id="priorityError" class="error-message"></p>
 
@@ -107,11 +107,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function getPriorityColor($priority)
     {
         switch ($priority) {
-            case 'Low':
+            case 'Malá':
                 return '#FE9900'; // Žltá pre nízku prioritu
-            case 'Medium':
+            case 'Stredná':
                 return '#0000FF'; // Modrá pre strednú prioritu
-            case 'High':
+            case 'Vysoká':
                 return '#FF0000'; // Červená pre vysokú prioritu
             default:
                 return '#ccc'; // Predvolená farba, ak nie je žiadna zhoda
@@ -129,9 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label for="editPriority">Priorita:</label>
             <select name="edit_priority" id="editPriority">
-                <option value="Low">Malá</option>
-                <option value="Medium">Stredná</option>
-                <option value="High">Vysoká</option>
+                <option value="Malá">Malá</option>
+                <option value="Stredná">Stredná</option>
+                <option value="Vysoká">Vysoká</option>
             </select>
             <p id="editPriorityError" class="error-message"></p>
 
