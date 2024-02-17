@@ -1,19 +1,21 @@
 <?php
-    require_once("connect.php");
+require_once("connect.php");
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $taskId = $_POST["task_id"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $taskId = $_POST["task_id"];
 
-        // Perform the task deletion
-        $stmt = $conn->prepare("DELETE FROM todo WHERE task_id = ?");
-        $stmt->bind_param("i", $taskId);
+    try {
+        // Use the connection from connect.php
+        $stmt = $conn->prepare("DELETE FROM todo WHERE task_id = :taskId");
+        $stmt->bindParam(":taskId", $taskId, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             echo "Task deleted successfully";
         } else {
-            echo "Error deleting task: " . $stmt->error;
+            echo "Error deleting task";
         }
-
-        $stmt->close();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
+}
 ?>
