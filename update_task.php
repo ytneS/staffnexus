@@ -7,16 +7,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $priority = $_POST["priority"];
     $description = $_POST["description"];
 
-    // Zde provedete aktualizaci úkolu v databázi pomocí UPDATE statementu
-    $stmt = $conn->prepare("UPDATE todo SET task = ?, priority = ?, description = ? WHERE task_id = ?");
-    $stmt->bind_param("sssi", $taskName, $priority, $description, $taskId);
+    try {
+        $conn->beginTransaction();
 
-    if ($stmt->execute()) {
-        echo "Task updated successfully";
-    } else {
-        echo "Error updating task: " . $stmt->error;
+        $stmt = $conn->prepare("UPDATE todo SET task = ?, priority = ?, description = ? WHERE task_id = ?");
+        $stmt->bindParam(1, $taskName);
+        $stmt->bindParam(2, $priority);
+        $stmt->bindParam(3, $description);
+        $stmt->bindParam(4, $taskId);
+
+        if ($stmt->execute()) {
+            $conn->commit();
+            echo "Uloha bola úspešne aktualizovaná";
+        } else {
+            $conn->rollBack();
+            echo "Chyba pri aktualizovanii úlohy";
+        }
+    } catch (PDOException $e) {
+        $conn->rollBack();
+        echo "Chyba pri aktualizovanii úlohy: " . $e->getMessage();
+    } finally {
+        $conn = null; // Close the connection
     }
-
-    $stmt->close();
 }
 ?>
