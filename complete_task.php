@@ -4,34 +4,27 @@ require_once("connect.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $taskId = $_POST["task_id"];
 
-    // Získání údajů o úkolu
-    $stmtSelect = $conn->prepare("SELECT task, priority, description FROM todo WHERE task_id = ?");
-    $stmtSelect->bind_param("i", $taskId);
-    $stmtSelect->execute();
-    $stmtSelect->bind_result($task, $priority, $description);
-    $stmtSelect->fetch();
-    $stmtSelect->close();
+    try {
+        // Získání údajů o úkolu
+        $selectQuery = "SELECT task, priority, description FROM todo WHERE task_id = ?";
+        $stmtSelect = $conn->prepare($selectQuery);
+        $stmtSelect->execute([$taskId]);
+        $taskData = $stmtSelect->fetch(PDO::FETCH_ASSOC);
+        $stmtSelect->closeCursor();
 
-    // Přidání úkolu do completedtodo
-    $stmtInsert = $conn->prepare("INSERT INTO completedtodo (task, priority, description) VALUES (?, ?, ?)");
-    $stmtInsert->bind_param("sss", $task, $priority, $description);
-    
-    if ($stmtInsert->execute()) {
+        // Přidání úkolu do completedtodo
+        $insertQuery = "INSERT INTO completedtodo (task, priority, description) VALUES (?, ?, ?)";
+        $stmtInsert = $conn->prepare($insertQuery);
+        $stmtInsert->execute([$taskData["task"], $taskData["priority"], $taskData["description"]]);
+
         // Úkol byl úspěšně přesunut do completedtodo, nyní jej odstraňte z todo
-        $stmtDelete = $conn->prepare("DELETE FROM todo WHERE task_id = ?");
-        $stmtDelete->bind_param("i", $taskId);
-        
-        if ($stmtDelete->execute()) {
-            echo "Task completed successfully";
-        } else {
-            echo "Error deleting task from todo: " . $stmtDelete->error;
-        }
+        $deleteQuery = "DELETE FROM todo WHERE task_id = ?";
+        $stmtDelete = $conn->prepare($deleteQuery);
+        $stmtDelete->execute([$taskId]);
 
-        $stmtDelete->close();
-    } else {
-        echo "Error completing task: " . $stmtInsert->error;
+        echo "Task completed successfully";
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
-
-    $stmtInsert->close();
 }
 ?>
