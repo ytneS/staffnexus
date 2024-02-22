@@ -72,7 +72,7 @@ if (isset($_POST['resetbtn'])) {
     } catch (Exception $e) {
         echo "<script>
             setTimeout(function() {
-                window.alert('Error: " . $e->getMessage() . "');
+                window.alert('" . $e->getMessage() . "');
             }, 100);
           </script>";
     }
