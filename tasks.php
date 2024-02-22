@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
     <div id="editTaskModal" class="modal">
     <div class="modal-content">
-        <h2>Edit Task</h2>
+        <h2>Upraviť Úlohu</h2>
         <form id="editTaskForm" method="post" action="" onsubmit="return validateEditForm()">
             <input type="hidden" name="edit_task_id" id="editTaskId">
             <label for="editTaskName">Úloha:</label>
