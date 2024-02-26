@@ -16,10 +16,9 @@
             session_start(); 
             if (isset($_SESSION['username'])) {
                 $loggedInUser = $_SESSION['username'];
-                echo "Welcome, $loggedInUser!"; 
+                ?><h1 class="greeting">Vitajte, <?php echo $loggedInUser; ?>!</h1><?php
             } 
             ?>
-            <h1>toto je dashboard</h1>
             
             <?php
             // Include the database connection file
@@ -46,15 +45,18 @@
             ?>
 
             <div class="dashboard-section">
-                <h2>Total Tasks</h2>
-                <p><?php echo "$totalTasks tasks"; ?></p>
-            </div>
+                <div class="dashboard-box">
+                    <h2>Nedokončené úlohy</h2>
+                    <img src="IMG/necom.png">
+                    <p><?php echo "$totalTasks úloh"; ?></p>
+                </div>
 
-            <div class="dashboard-section">
-                <h2>Completed Tasks</h2>
-                <p><?php echo "$completedTasks completed tasks"; ?></p>
+                <div class="dashboard-box">
+                    <h2>Dokončené úlohy</h2>
+                    <img src="IMG/com.png">
+                    <p><?php echo "$completedTasks úloh"; ?></p>
+                </div>
             </div>
-        </div>
     </div>
 </body>
 </html>
