@@ -14,7 +14,7 @@
     ?>
     <div class="home">
         <div class="text">
-            <h1> nezabudni na mna</h1>
+         
         </div>
     </div>
 </body>
