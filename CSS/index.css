@@ -258,7 +258,6 @@ input {
 }
 
 .register-container {
-  /* position: relative; */
   left: 0;
   width: 50%;
   opacity: 0;
