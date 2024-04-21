@@ -1,10 +1,8 @@
 function clearForm() {
-    // Get references to form fields
     var taskNameField = document.getElementById('task_name');
     var priorityField = document.getElementById('priority');
     var descriptionField = document.getElementById('description');
 
-    // Reset form field values
     taskNameField.value = '';
     priorityField.value = '';
     descriptionField.value = '';
@@ -17,7 +15,6 @@ function validateForm() {
     var taskName = document.getElementById('task_name').value.trim();
     var priority = document.getElementById('priority').value;
 
-    // Reset error messages before each form submission attempt
     if (taskName === '') {
         document.getElementById('taskNameError').innerText = '*Please enter a task name.';
     }
@@ -26,34 +23,28 @@ function validateForm() {
         document.getElementById('priorityError').innerText = '*Please select a priority.';
     }
 
-    // If there is any error, do not submit the form
     if (taskName === '' || priority === '') {
         return false;
     }
-
-    // Additional custom checks can be added as needed
 
     return true;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('DOM content loaded'); // Check if this log appears in the console
+    console.log('DOM content loaded'); 
 
-    // Add an event listener to all delete buttons
     const deleteButtons = document.querySelectorAll('.delete-btn');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
             const taskId = this.getAttribute('data-taskid');
-            console.log('Delete button clicked for task ID:', taskId); // Check if this log appears in the console
+            console.log('Delete button clicked for task ID:', taskId); 
             deleteTask(taskId);
         });
     });
 
-    // Function to handle asynchronous deletion
     function deleteTask(taskId) {
         console.log('Attempting to delete task with ID:', taskId);
     
-        // Make an AJAX request to the server to delete the task
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'delete_task.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -61,9 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (xhr.readyState === 4) {
                 console.log('AJAX request completed');
                 if (xhr.status === 200) {
-                    // Check if the response indicates successful deletion
                     if (xhr.responseText.trim() === 'Task deleted successfully') {
-                        // Refresh the task list after deletion
                         location.reload();
                     } else {
                         console.error("Error deleting task:", xhr.responseText);
@@ -78,9 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // ... (Vaše stávající kód)
-
-    // Event listener pro tlačítko "Complete"
     const completeButtons = document.querySelectorAll('.complete-btn');
     completeButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -91,11 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Funkce pro asynchronní dokončení úkolu
     function completeTask(taskId) {
         console.log('Attempting to complete task with ID:', taskId);
 
-        // Vytvoření AJAX požadavku k serveru pro dokončení úkolu
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'complete_task.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -103,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (xhr.readyState === 4) {
                 console.log('AJAX request completed');
                 if (xhr.status === 200) {
-                    // Znovunačtení seznamu úkolů po dokončení
                     location.reload();
                 } else {
                     console.error("Error completing task:", xhr.statusText);
@@ -115,15 +98,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Add an event listener to the form for submission validation
     var addTaskForm = document.querySelector('form');
     addTaskForm.addEventListener('submit', function (event) {
         if (!validateForm()) {
-            event.preventDefault(); // Prevent the form from submitting if validation fails
+            event.preventDefault(); 
         }
     });
 
-    // Add an event listener to all delete buttons
     const deleteButtons = document.querySelectorAll('.delete-btn');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -133,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Add an event listener to edit buttons
     const editButtons = document.querySelectorAll('.edit-btn');
     editButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -142,13 +122,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Add an event listener to close button in the edit modal
     const closeBtn = document.querySelector('.close');
     closeBtn.addEventListener('click', function () {
         closeEditModal();
     });
 
-    // Function to open the edit modal
     function openEditModal(taskId) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -167,13 +145,11 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.send();
     }
 
-    // Function to close the edit modal
     function closeEditModal() {
         console.log('Closing modal');
     
         var modal = document.getElementById('editTaskModal');
     
-        // Close the modal
         if (modal) {
             modal.style.display = 'none';
         }
@@ -186,7 +162,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     
-    // Add an event listener to the save changes button in the edit modal
     const saveEditBtn = document.getElementById('saveEditBtn');
     saveEditBtn.addEventListener('click', function () {
         var editedTaskId = document.getElementById("editTaskId").value;
