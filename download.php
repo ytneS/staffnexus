@@ -21,7 +21,7 @@
             <div class="download-options">
                 <div class="download-option">
                         <h2>Pre Windows</h2>
-                        <a href="link-to-windows" class="download-button">Stiahnuť pre Windows</a>
+                        <a href="DOWN\staffnexus.exe" class="download-button" download>Stiahnuť pre Windows</a>
                         <p>Postupujte podľa inštrukcií na inštaláciu pre Windows:</p><br>
                         <ol class="instructions">
                             <li>Kliknite na odkaz na stiahnutie pre Windows.</li>
@@ -32,7 +32,7 @@
 
                     <div class="download-option">
                         <h2>Pre Android</h2>
-                        <a href="link-to-android" class="download-button">Stiahnuť pre Android</a>
+                        <a href="DOWN\staffnexus.apk" class="download-button" download>Stiahnuť pre Android</a>
                         <p>Postupujte podľa inštrukcií na inštaláciu pre Android:</p><br>
                         <ol class="instructions">
                             <li>Kliknite na odkaz na stiahnutie pre Android.</li>
