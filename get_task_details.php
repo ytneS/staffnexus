@@ -1,5 +1,4 @@
 <?php
-// get_task_details.php
 
 require_once("connect.php");
 
