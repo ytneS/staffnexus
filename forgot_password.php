@@ -27,26 +27,25 @@ if (isset($_POST['resetbtn'])) {
         $row = $stmt->fetch();
 
         if ($row) {
-            // Generate a random password reset token
+            
             $token = bin2hex(random_bytes(3));
 
             $hashedPassword = hash('sha256', $token);
 
-            // Update the user's record with the reset token
+            
             $updateSql = "UPDATE users SET password=:hashedPassword WHERE email=:email";
             $updateStmt = $conn->prepare($updateSql);
             $updateStmt->bindParam(':hashedPassword', $hashedPassword);
             $updateStmt->bindParam(':email', $email);
             $updateStmt->execute();
 
-            // Send a password reset email to the user using PHPMailer
             $mail = new PHPMailer\PHPMailer\PHPMailer;
 
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'staffnexuss@gmail.com'; // Replace with your Gmail email address
-            $mail->Password = 'ffsb lbiu txvg csxk'; // Replace with your Gmail password
+            $mail->Username = 'staffnexuss@gmail.com'; 
+            $mail->Password = 'ffsb lbiu txvg csxk'; 
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
 
@@ -95,9 +94,7 @@ if (isset($_POST['resetbtn'])) {
                 <button type="submit" name="resetbtn">Resetovať</button>
             </form>
             
-            <!-- Change the button to an anchor tag for "Back to Login" -->
             <div class="form-container reset-container with-back-link">
-    <!-- ... existing code ... -->
         <a href="index.php" class="back-link">vrátiť sa späť</a>
         </div>
         </div>
