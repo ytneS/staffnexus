@@ -14,6 +14,9 @@
 <body>
     <?php
         require_once("connect.php");
+        require_once("PHPMailer.php");
+        require_once("SMTP.php");
+        require_once("Exception.php");
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST['registerbtn'])) {  
@@ -21,7 +24,7 @@
                 $email = $_POST['email'];
                 $password = $_POST['password'];
             
-                // Kontrola, či e-mail už existuje
+
                 $checkEmailQuery = "SELECT * FROM users WHERE email=:email";
                 $stmt = $conn->prepare($checkEmailQuery);
                 $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -34,13 +37,30 @@
                             document.getElementById('email-error').innerText = 'Tento e-mail sa už používa. Prosím, zvoľte iný e-mail.';
                         </script>";
                 } else {
-                    // E-mail nie je v databáze, môžeme pokračovať s registráciou
                     $hashedPassword = hash('sha256', $password);
             
                     $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
                     $isInserted = $conn->query($sql);
             
                     if ($isInserted) {
+                        $mail = new PHPMailer\PHPMailer\PHPMailer;
+
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'staffnexuss@gmail.com'; 
+                        $mail->Password = 'ffsb lbiu txvg csxk'; 
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Port = 465;
+
+                        $mail->setFrom('staffnexuss@gmail.com', 'Staff Nexus');
+                        $mail->addAddress($email);
+
+                        $mail->Subject = '=?utf-8?B?' . base64_encode('Registrácia účtu') . '?=';
+                        $mail->Body = "Váš účet bol úspešne zaregistrovaný.";
+                        if (!$mail->send()) {
+                            throw new Exception('Chyba pri posielaní mailu: ' . $mail->ErrorInfo);
+                        } 
                         header("Location: index.php");     
                         exit();                             
                     } else {
@@ -65,8 +85,8 @@
                     $_SESSION['username'] = $row['username'];
 
                     if ($rememberMe) {
-                        setcookie('remember_email', $lgEmail, time() + (86400 * 30), "/"); // 30 days
-                        setcookie('remember_password', $lgPassword, time() + (86400 * 30), "/"); // 30 days
+                        setcookie('remember_email', $lgEmail, time() + (86400 * 30), "/"); // 30 dni
+                        setcookie('remember_password', $lgPassword, time() + (86400 * 30), "/"); // 30 dni
                     } else {
                         setcookie('remember_email', '', time() - 3600, "/");
                         setcookie('remember_password', '', time() - 3600, "/");
