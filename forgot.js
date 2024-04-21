@@ -40,7 +40,7 @@ function checkRequired(inputArr) {
 }
 
 email.addEventListener("input", function () {
-    emailError.textContent = ""; // Clear the error message for email
+    emailError.textContent = ""; 
 });
 
 form.addEventListener('submit', function (e) {
