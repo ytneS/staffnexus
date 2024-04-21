@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->rollBack();
         echo "Chyba pri aktualizovanii úlohy: " . $e->getMessage();
     } finally {
-        $conn = null; // Close the connection
+        $conn = null; 
     }
 }
 ?>
