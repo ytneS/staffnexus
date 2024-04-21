@@ -6,23 +6,23 @@
 
 .dashboard-box {
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Toto pridá ohraničenie tieňom */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     padding: 20px;
     text-align: center;
-    width: 45%; /* Adjust the width as needed */
+    width: 45%; 
 }
 
 .greeting {
-    font-size: 20px; /* Adjust the font size as needed */
-    color: var(--text-color); /* Adjust the color as needed */
+    font-size: 20px; 
+    color: var(--text-color); 
     margin: 10px 0 30px;
 }
 
 body.dark .dashboard-box {
-    background-color: #000; /* Dark background color for the dashboard-box in dark mode */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Dark border color for the dashboard-box in dark mode */
-    color: var(--text-color); /* Light text color for contrast in dark mode */
+    background-color: #000; 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); 
+    color: var(--text-color); 
 }
 
 body.dark .greeting {
