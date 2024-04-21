@@ -36,12 +36,6 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="calendar.php">
-                            <i class='bx bx-calendar icon'></i>
-                            <span class="text nav-text">Kalendár</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
                         <a href="tasks.php">
                             <i class='bx bx-task icon'></i>
                             <span class="text nav-text">Úlohy</span>
