@@ -41,12 +41,10 @@ email.addEventListener("input", function(){
     if (!checkEmail(email.value)) {
         showError(email, "*Email nie je platný");
     } else {
-        showError(email, ""); // Vynulujeme chybovú správu pri platnom e-maile
+        showError(email, ""); 
     }
 
-    // Nová podmienka pre kontrolu, či e-mail sa už používa v databáze
     if (email.value.trim() !== '') {
-        // AJAX požiadavka na overenie e-mailu na serveri
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'check_email.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -172,12 +170,12 @@ function checkEmail2(email) {
 }
 
 lgEmail.addEventListener("input", function () {
-    lgEmailError.textContent = ""; // Clear the error message for email
+    lgEmailError.textContent = ""; 
     checkEmail2(lgEmail.value);
 });
 
 lgPassword.addEventListener("input", function () {
-    lgPasswordError.textContent = ""; // Clear the error message for password
+    lgPasswordError.textContent = ""; 
 });
 
 function checkRequiredLg(inputArr2) {
@@ -199,15 +197,12 @@ function getFieldNameLg(input) {
 }
 
 lgForm.addEventListener('submit', function (e) {
-    // Validate the form inputs
     const isRequiredError = checkRequiredLg([lgEmail, lgPassword]);
     const isEmailError = !checkEmail2(lgEmail.value);
 
-    // If there are validation errors, prevent the form submission
     if (isRequiredError || isEmailError) {
         e.preventDefault();
     }
-    // Otherwise, the form will be submitted as usual
 });
 
 
