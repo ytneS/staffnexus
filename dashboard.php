@@ -21,17 +21,14 @@
             ?>
             
             <?php
-            // Include the database connection file
             require_once("connect.php");
 
             try {
-                // Fetch total tasks
                 $totalTasksQuery = "SELECT COUNT(*) AS totalTasks FROM todo";
                 $totalTasksResult = $conn->query($totalTasksQuery);
                 $totalTasksRow = $totalTasksResult->fetch(PDO::FETCH_ASSOC);
                 $totalTasks = $totalTasksRow['totalTasks'];
 
-                // Fetch completed tasks
                 $completedTasksQuery = "SELECT COUNT(*) AS completedTasks FROM completedtodo";
                 $completedTasksResult = $conn->query($completedTasksQuery);
                 $completedTasksRow = $completedTasksResult->fetch(PDO::FETCH_ASSOC);
@@ -40,7 +37,6 @@
                 die("Error: " . $e->getMessage());
             }
 
-            // Close the database connection (optional for PDO, as it is automatically closed when the script ends)
             $conn = null;
             ?>
 
