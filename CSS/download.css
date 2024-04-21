@@ -70,22 +70,20 @@ a {
 }
 
 body.dark .download-option {
-    background: transparent; /* Průhledné pozadí pro dark mode */
-    border-radius: 10px; /* Nastavte odpovídající border-radius pro tmavý režim */
+    background: transparent; 
+    border-radius: 10px; 
 }
 
 body.dark li {
-    color: var(--text-color); /* Barva textu pro kontrast ve tmavém režimu */
+    color: var(--text-color);
 }
 
-/* Barvy textu pro dark mode v tabulkách */
 body.dark .download-option h2,
 body.dark .download-option p,
 body.dark .download-button {
-    color: var(--text-color); /* Bílý text pro kontrast */
+    color: var(--text-color); 
 }
 
-/* Barvy textu při najetí na tlačítko ve tmavém režimu */
 body.dark .download-button:hover {
     color: var(--text-color);
 }
@@ -99,7 +97,7 @@ body.dark p{
 }
 
 body.dark .download-option{
-    background-color: #000; /* Opačná barva k #f8f8f8, tedy černá */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Opačná barva k rgba(0, 0, 0, 0.1), tedy bílá s průhledností */
+    background-color: #000;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); 
 }
 
